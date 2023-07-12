@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".RegistroActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/edt_nombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombre"
+            android:padding="10dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/campo_redondeado">
+
+        </EditText>
+
+        <EditText
+            android:id="@+id/edt_apellido"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Apellidos"
+            android:padding="10dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/campo_redondeado">>
+
+        </EditText>
+
+        <EditText
+            android:id="@+id/edt_correo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:padding="10dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/campo_redondeado">>
+
+        </EditText>
+
+        <EditText
+            android:id="@+id/edt_contrasena"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Contraseña"
+            android:inputType="textPassword"
+            android:padding="10dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/campo_redondeado">
+
+        </EditText>
+        <Spinner
+            android:id="@+id/spinnerpre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </Spinner>
+
+        <EditText
+            android:id="@+id/edt_pregunta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Respuesta Pregunta"
+            android:inputType="text"
+            android:padding="10dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/campo_redondeado">
+
+        </EditText>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <CheckBox
+                android:id="@+id/chb_terminos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></CheckBox>
+
+            <TextView
+                android:id="@+id/tev_terminos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_TermsandConditions"
+                android:textColor="@color/black"></TextView>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_registro_usuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_button2"
+            android:text="Registrarme">
+
+        </Button>
+    </LinearLayout>
+
+</LinearLayout>

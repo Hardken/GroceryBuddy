@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ConsultarVentas">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="20dp">
+
+        <TextView
+            android:id="@+id/venta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Vendido"
+            android:gravity="center"
+            android:textSize="20dp"
+            android:textColor="@color/black">
+        </TextView>
+        <EditText
+            android:id="@+id/finduser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Digite usuario">
+
+        </EditText>
+        <Button
+            android:id="@+id/btnfind"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Filtrar">
+
+        </Button>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rev_venta"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
+
+
+</LinearLayout>

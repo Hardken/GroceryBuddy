@@ -1,0 +1,55 @@
+<resources>
+    <string name="app_name">Grupo 10</string>
+    <string name="txt_jugar">PLAY</string>
+    <string name="txt_perfil">PROFILE</string>
+    <string name="txt_ajustes">SETTINGS</string>
+    <string name="txt_acerca_de">ABOUT</string>
+    <string name="txt_btnjugar">hit button play</string>
+    <string name="txt_usuario">E-MAIL</string>
+    <string name="txt_contrasena">PASSWORD</string>
+    <string name="txt_login">SING IN</string>
+    <string name="txt_recontrasena">RECOVER PASSWORD</string>
+    <string name="txt_registro">SIGN UP ME</string>
+    <string name="txt_aceptar">ACCEPT</string>
+    <string name="txt_buy">BUY</string>
+    <string name="txt_addtocar">ADD TO CAR</string>
+    <string name="txt_addtofav">FAVORITES</string>
+    <string name="txt_Location">LOCATION</string>
+    <string name="txt_saveprod">SAVE PRODUCT</string>
+    <string name="txt_selc.img">SEL. IMAGE</string>
+    <string name="txt_sub_imag">UPLOAD IMAGE</string>
+    <string name="txt_available">AVAILABLE</string>
+    <string name="txt_categoria">CATEGORY</string>
+    <string name="txt_PRECIO">PRICE</string>
+    <string name="txt_NAME">NAME</string>
+    <string name="txt_TermsandConditions">Terms and Conditions</string>
+    <string name="title_activity_menu">MenuActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="txt_terminos">It is a necessary requirement for the purchase of the products offered on this site, that you read and accept the following Terms and Conditions that are written below. The use of our services as well as the purchase of our products will imply that you have read and accepted the Terms and Conditions of Use herein. All products that are offered by our website may be created, charged, shipped or presented by a third party website and in such case would be subject to their own Terms and Conditions. In some cases, in order to purchase a product, it will be necessary for the user to register, entering reliable personal data and defining a password.
+The user can choose and change the password for his account management access at any time, in case he has registered and it is necessary for the purchase of any of our products. does not assume responsibility in case he gives such password to third parties.
+All purchases and transactions carried out through this website are subject to a confirmation and verification process, which may include verification of stock and product availability, validation of the payment method, validation of the invoice (if any) and compliance with the conditions required by the selected payment method. In some cases an e-mail verification may be required.</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Store</string>
+    <string name="menu_slideshow">Favorites</string>
+    <string name="menu_exit">Sing Out</string>
+
+    <string-array name="categorias">
+        <item>Futbol</item>
+        <item>Baloncesto</item>
+        <item>Tenis</item>
+        <item>Natacion</item>
+        <item>Beisbol</item>
+        <item>Carreras</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_mapa">MapaActivity</string>
+    <string name="title_activity_user_menu">UserMenu</string>
+</resources>

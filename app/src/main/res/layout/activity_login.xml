@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="20dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:src="@drawable/avatar"
+            android:layout_weight="60"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_usuario"
+            android:textSize="20dp"
+            android:layout_marginLeft="3dp"
+            android:textColor="@color/black">
+
+        </TextView>
+
+        <EditText
+            android:id="@+id/edt_usuario"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:hint="@string/txt_usuario"
+            android:textColorHint="@color/black"
+            android:layout_weight="10"
+            android:background="@drawable/campo_redondeado"
+            android:padding="10dp"
+            android:layout_marginBottom="20dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_contrasena"
+            android:textSize="20dp"
+            android:layout_marginLeft="3dp"
+            android:textColor="@color/black">
+
+        </TextView>
+
+        <EditText
+            android:id="@+id/edt_contrasena"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:hint="@string/txt_contrasena"
+            android:textColorHint="@color/black"
+
+            android:inputType="textPassword"
+            android:layout_weight="10"
+            android:background="@drawable/campo_redondeado"
+            android:padding="10dp"
+            android:layout_marginBottom="20dp"/>
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:backgroundTint="@null"
+            android:background="@drawable/custom_button2"
+            android:text="@string/txt_login"
+            android:layout_weight="10"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/btncontra"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:backgroundTint="@null"
+            android:background="@drawable/custom_button2"
+            android:text="@string/txt_recontrasena"
+            android:layout_weight="10"
+            android:layout_marginBottom="10dp"/>
+        <Button
+            android:id="@+id/btn_registro"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:backgroundTint="@null"
+            android:background="@drawable/custom_button1"
+            android:textColor="@color/black"
+            android:text="@string/txt_registro"
+            android:layout_weight="10"/>
+    </LinearLayout>
+</LinearLayout>

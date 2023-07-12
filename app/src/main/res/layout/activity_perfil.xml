@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PerfilActivity">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ProductFragment"
+        android:background="@color/white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="20dp"
+                android:orientation="vertical">
+                <EditText
+                    android:id="@+id/edt_usr_nombre"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nombre">
+
+                </EditText>
+
+                <EditText
+                    android:id="@+id/edt_usr_apellido"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Apellido">
+
+                </EditText>
+
+                <EditText
+                    android:id="@+id/edt_user_correo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Correo">
+
+                </EditText>
+
+
+                <Button
+                    android:id="@+id/btn_usr_seleccionar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_button2"
+                    android:layout_gravity="center"
+                    android:text="Seleccionar imagen"></Button>
+
+                <Button
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/btn_usr_subir"
+                    android:layout_gravity="center"
+                    android:background="@drawable/custom_button2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Subir Imagen"></Button>
+
+                <ImageView
+                    android:layout_gravity="center"
+                    android:id="@+id/img_usr_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="350dp"
+                    android:src="@drawable/default_image">
+
+                </ImageView>
+
+                <Button
+                    android:id="@+id/btn_usr_guardar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:backgroundTint="@null"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/custom_button1"
+                    android:text="Guardar Usuario"></Button>
+                <Button
+                    android:id="@+id/btn_usr_dele"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:backgroundTint="@null"
+                    android:background="@drawable/custombutton3"
+                    android:text="Eliminar Usuario"></Button>
+            </LinearLayout>
+
+
+    </LinearLayout>
+
+  </LinearLayout>

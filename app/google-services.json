@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "960048974091",
+    "project_id": "grupo10-fae99",
+    "storage_bucket": "grupo10-fae99.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:960048974091:android:4e6749b6709cc673f2ba0e",
+        "android_client_info": {
+          "package_name": "com.example.grupo10"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "960048974091-eg8c2vpb8r8uuj3n7uo2srsvkn29vq67.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAT2wFz7BpBBTu8t6fmPWeJx1iHeGQCXNA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "960048974091-eg8c2vpb8r8uuj3n7uo2srsvkn29vq67.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

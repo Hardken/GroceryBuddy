@@ -1,0 +1,53 @@
+<resources>
+    <string name="app_name">Grupo 10</string>
+    <string name="txt_jugar">JUGAR</string>
+    <string name="txt_perfil">PERFIL</string>
+    <string name="txt_ajustes">AJUSTES</string>
+    <string name="txt_acerca_de">ACERCA DE</string>
+    <string name="txt_aceptar">ACEPTAR</string>
+    <string name="txt_buy">COMPRAR</string>
+    <string name="txt_recontrasena">RECOVER PASSWORD</string>
+    <string name="txt_addtocar">AGREGAR AL CARRITO</string>
+    <string name="txt_Location">UBICACIÓN</string>
+    <string name="txt_addtofav">FAVORITOS</string>
+    <string name="txt_saveprod">GUARDAR PRODUCTO</string>
+    <string name="txt_selc.img">Sel. imagen</string>
+    <string name="txt_sub_imag">SUBIR IMAGEN</string>
+    <string name="txt_available">DISPONIBLE</string>
+    <string name="txt_categoria">CATEGORÍA</string>
+    <string name="txt_PRECIO">PRECIO</string>
+    <string name="txt_NAME">NOMBRE</string>
+    <string name="txt_TermsandConditions">Términos y condiciones</string>
+    <string name="txt_btnjugar">Le he dado al boton JUGAR</string>
+    <string name="txt_usuario">CORREO</string>
+    <string name="txt_contrasena">CONTRASEÑA</string>
+    <string name="txt_login">INICIAR SESION</string>
+    <string name="txt_registro">REGISTRO</string>
+
+    <string name="title_activity_menu">MenuActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="txt_terminos">Es requisito necesario para la adquisición de los productos que se ofrecen en este sitio, que lea y acepte los siguientes Términos y Condiciones que a continuación se redactan. El uso de nuestros servicios así como la compra de nuestros productos implicará que usted ha leído y aceptado los Términos y Condiciones de Uso en el presente documento. Todas los productos  que son ofrecidos por nuestro sitio web pudieran ser creadas, cobradas, enviadas o presentadas por una página web tercera y en tal caso estarían sujetas a sus propios Términos y Condiciones. En algunos casos, para adquirir un producto, será necesario el registro por parte del usuario, con ingreso de datos personales fidedignos y definición de una contraseña.
+El usuario puede elegir y cambiar la clave para su acceso de administración de la cuenta en cualquier momento, en caso de que se haya registrado y que sea necesario para la compra de alguno de nuestros productos.  no asume la responsabilidad en caso de que entregue dicha clave a terceros.
+Todas las compras y transacciones que se lleven a cabo por medio de este sitio web, están sujetas a un proceso de confirmación y verificación, el cual podría incluir la verificación del stock y disponibilidad de producto, validación de la forma de pago, validación de la factura (en caso de existir) y el cumplimiento de las condiciones requeridas por el medio de pago seleccionado. En algunos casos puede que se requiera una verificación por medio de correo electrónico.</string>
+
+    <string name="menu_home">Inicio</string>
+    <string name="menu_gallery">Tienda</string>
+    <string name="menu_slideshow">Favoritos</string>
+    <string name="menu_exit">Cerrar Sesión</string>
+
+
+    <string-array name="categorias">
+        <item>Futbol</item>
+        <item>Baloncesto</item>
+        <item>Tenis</item>
+        <item>Natacion</item>
+        <item>Beisbol</item>
+        <item>Carreras</item>
+    </string-array>
+</resources>
