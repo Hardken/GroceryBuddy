@@ -29,6 +29,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.bumptech.glide.Glide;
 import com.example.grupo10.databinding.ActivityMenuBinding;
 import com.example.grupo10.databinding.ActivityMenuUserBinding;
+import com.example.grupo10.ui.home.HomeFragment;
 import com.example.grupo10.util.Constant;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -131,7 +132,7 @@ public class MenuActivityuser extends AppCompatActivity {
 
                     SharedPreferences.Editor editor = mispreferencias.edit();
 
-                    editor.putString("usuarioa", "");
+                    editor.putString("usuario", "");
                     editor.putString("contrasena", "");
                     editor.putString("nombre", "");
                     editor.putString("imagen", "");
@@ -171,6 +172,11 @@ public class MenuActivityuser extends AppCompatActivity {
         String nombre = mispreferencias.getString("nombre", "NO HAY CONTRASEÑA");
         String imagen = mispreferencias.getString("imagen","");
 
+        Bundle nombredata = new Bundle();
+        bundle.putString("user", usuario);
+
+        HomeFragment homeFragment = new HomeFragment();
+        homeFragment.setArguments(nombredata);
 
         View headerView = navigationView.getHeaderView(0);
         TextView navNombre = headerView.findViewById(R.id.tev_header_nombre);
@@ -203,8 +209,6 @@ public class MenuActivityuser extends AppCompatActivity {
         if (usuario.contains("@grupo10.com")) {
             fab.setVisibility(View.VISIBLE);
         }
-
-
 
     }
 

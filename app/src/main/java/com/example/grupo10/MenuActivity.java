@@ -24,6 +24,7 @@ import android.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.example.grupo10.ui.gallery.GalleryFragment;
+import com.example.grupo10.ui.home.HomeFragment;
 import com.example.grupo10.util.Constant;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -69,6 +70,7 @@ public class MenuActivity extends AppCompatActivity {
     String urlImage;
     final  int OPEN_GALLERY = 1;
     String usuario;
+    String userne;
     int usuario2;
     MediaPlayer player;
 
@@ -78,17 +80,32 @@ public class MenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        mispreferencias = getSharedPreferences(Constant.PREFERENCE, MODE_PRIVATE);
+
+        usuario = mispreferencias.getString("usuario", "NO HAY USUARIO");
+        //String contrasena = mispreferencias.getString("contrasena", "NO HAY CONTRASEÑA");
+        String nombre = mispreferencias.getString("nombre", "NO HAY User");
+        String imagen = mispreferencias.getString("imagen","");
+
 
         binding = ActivityMenuBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setSupportActionBar(binding.appBarMenu.toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
 
-        Intent intent = new Intent(MenuActivity.this, MenuActivity.class);
+        //Intent intent = new Intent(MenuActivity.this, MenuActivity.class);
         Bundle bundle2 = getIntent().getExtras();
-        usuario2 = bundle2.getInt("usertipe");
+        if (bundle2 != null) {
+            usuario2 = bundle2.getInt("usertipe");
+            userne = bundle2.getString("usuario");
+            // ...
+        }
+
+        Bundle args = new Bundle();
+        args.putInt("usertipe", usuario2);
+
+
         miactividad = this;
-        //System.out.println("tipo usuario: "+usuario2);
         mAuth = FirebaseAuth.getInstance();
 
         binding.appBarMenu.fab.setOnClickListener(new View.OnClickListener() {
@@ -174,13 +191,6 @@ public class MenuActivity extends AppCompatActivity {
             Log.e("BUN_USUARIO", bundle.getString("usuario"));
             Log.e("BUN_CONTRASENA", bundle.getString("contrasena"));
         }
-
-        mispreferencias = getSharedPreferences(Constant.PREFERENCE, MODE_PRIVATE);
-
-        usuario = mispreferencias.getString("usuario", "NO HAY USUARIO");
-        String contrasena = mispreferencias.getString("contrasena", "NO HAY CONTRASEÑA");
-        String nombre = mispreferencias.getString("nombre", "NO HAY CONTRASEÑA");
-        String imagen = mispreferencias.getString("imagen","");
 
 
         View headerView = navigationView.getHeaderView(0);

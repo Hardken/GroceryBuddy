@@ -251,14 +251,14 @@ public class ProductEdit extends Fragment {
             }
         });
 
-        btn_producto_ubicacion.setOnClickListener(new View.OnClickListener() {
+/*        btn_producto_ubicacion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), MapaActivity.class);
                 startActivityForResult(intent, OPEN_MAPA);
             }
         });
-
+*/
         return root;
     }
 

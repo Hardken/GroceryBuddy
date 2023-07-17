@@ -84,8 +84,8 @@ public class ConsultarVentas extends Fragment {
                                 String usuarios = document.getData().get("usuario").toString();
                                 String categoria = document.getData().get("categoria").toString();
 
-                                int precio = Integer.parseInt(document.getData().get("precio").toString());
-                                int precio2 = Integer.parseInt(document.getData().get("precio").toString());
+                                Double precio = Double.parseDouble(document.getData().get("precio").toString());
+                                Double precio2 = Double.parseDouble(document.getData().get("precio").toString());
                                 pre += precio;
                                 //boolean entock = Boolean.parseBoolean(document.getData().get("entock").toString());
                                 String imagen = document.getData().get("imagen").toString();

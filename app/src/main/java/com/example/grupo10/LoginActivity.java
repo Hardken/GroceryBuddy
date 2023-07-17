@@ -287,8 +287,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         editor.putString("nombre", nombre);
         editor.putString("imagen", imagen);
         editor.putInt("usertipe", usertipe);
-
-        editor.commit();
+        editor.apply();
 
         if (usertipe==1){
             Intent intent = new Intent(this, MenuActivityuser.class);

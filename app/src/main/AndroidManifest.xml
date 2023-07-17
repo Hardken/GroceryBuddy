@@ -43,6 +43,9 @@
             android:name=".DetalleProductoActiviy"
             android:exported="false" />
         <activity
+            android:name=".DetalleProductoActiviyuser"
+            android:exported="false" />
+        <activity
             android:name=".TERMINOS_ACTI"
             android:exported="false" />
         <activity
