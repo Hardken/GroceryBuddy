@@ -236,7 +236,7 @@ public class DetalleProductoActiviyuser extends AppCompatActivity implements Vie
             case R.id.btn_compra:
 
                 // Add a new document with a generated ID
-                db.collection("pedidos"+usuario)
+                db.collection("pedidos_"+nombre)
                     .add(producto)
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override

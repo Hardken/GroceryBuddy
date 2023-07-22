@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.grupo10.DetalleProductoActiviy;
+import com.example.grupo10.DetalleProductoActiviyuser;
 import com.example.grupo10.R;
 import com.example.grupo10.databinding.FragmentSlideshowBinding;
 import com.example.grupo10.util.Constant;
@@ -132,6 +133,9 @@ public class SlideshowFragment extends Fragment {
         private final JSONArray productos;
         private final Activity miActividad;
 
+        SharedPreferences mispreferencias = getActivity().getSharedPreferences(Constant.PREFERENCE, Context.MODE_PRIVATE);
+        String usuario = mispreferencias.getString("usuario", "NO HAY USUARIO");
+        int usertipe = mispreferencias.getInt("usertipe", 2);
         public FavoritosAdapter(JSONArray productos, Activity miActividad) {
             this.productos = productos;
             this.miActividad = miActividad;
@@ -181,11 +185,19 @@ public class SlideshowFragment extends Fragment {
                     public void onClick(View v) {
                         try {
                             //Log.e("PRODUCTOS", productos.getJSONObject(position).toString());
-                            Intent intent = new Intent(miActividad, DetalleProductoActiviy.class);
+                            if (usertipe==1){
+                                Intent intent = new Intent(miActividad, DetalleProductoActiviyuser.class);
 
-                            intent.putExtra("producto", productos.getJSONObject(position).toString());
+                                intent.putExtra("producto", productos.getJSONObject(position).toString());
 
-                            miActividad.startActivity(intent);
+                                miActividad.startActivity(intent);
+                            } else if (usertipe==2) {
+                                Intent intent = new Intent(miActividad, DetalleProductoActiviy.class);
+
+                                intent.putExtra("producto", productos.getJSONObject(position).toString());
+
+                                miActividad.startActivity(intent);
+                            }
 
 
                         } catch (JSONException e) {

@@ -111,8 +111,6 @@ public class ConsultarVentas extends Fragment {
                                     producto.put("precio", precio);
                                     //producto.put("entock", entock);
                                     producto.put("imagen", imagen);
-                                    producto.put("latitud", latitud);
-                                    producto.put("longitud", longitud);
                                     producto.put("precioto",precio2);
 
                                     productos.put(producto);

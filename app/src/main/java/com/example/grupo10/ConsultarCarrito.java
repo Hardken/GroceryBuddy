@@ -156,6 +156,7 @@ public class ConsultarCarrito extends Fragment {
         private final Activity miActividad;
         SharedPreferences mispreferencias = getActivity().getSharedPreferences(Constant.PREFERENCE, Context.MODE_PRIVATE);
         String usuario = mispreferencias.getString("usuario", "NO HAY USUARIO");
+        int usertipe = mispreferencias.getInt("usertipe", 2);
         FirebaseFirestore db;
         public CarAdapter(JSONArray productos, Activity miActividad) {
             this.productos = productos;
@@ -207,12 +208,19 @@ public class ConsultarCarrito extends Fragment {
                     public void onClick(View v) {
                         try {
                             //Log.e("PRODUCTOS", productos.getJSONObject(position).toString());
-                            Intent intent = new Intent(miActividad, DetalleProductoActiviy.class);
+                            if (usertipe==1){
+                                Intent intent = new Intent(miActividad, DetalleProductoActiviyuser.class);
 
-                            intent.putExtra("producto", productos.getJSONObject(position).toString());
+                                intent.putExtra("producto", productos.getJSONObject(position).toString());
 
-                            miActividad.startActivity(intent);
+                                miActividad.startActivity(intent);
+                            } else if (usertipe==0) {
+                                Intent intent = new Intent(miActividad, DetalleProductoActiviy.class);
 
+                                intent.putExtra("producto", productos.getJSONObject(position).toString());
+
+                                miActividad.startActivity(intent);
+                            }
 
                         } catch (JSONException e) {
                             e.printStackTrace();

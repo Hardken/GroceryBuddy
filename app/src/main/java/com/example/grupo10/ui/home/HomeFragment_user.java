@@ -32,7 +32,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.protobuf.StringValue;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,7 +42,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment_user extends Fragment {
 
     String item;
     String nombre;
@@ -70,11 +69,10 @@ public class HomeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        View root=inflater.inflate(R.layout.fragment_home_user, container, false);
         SharedPreferences mispreferencias = getActivity().getSharedPreferences(Constant.PREFERENCE, Context.MODE_PRIVATE);
         nombre = mispreferencias.getString("usuario", "NO HAY USUARIO");
         usertipe = mispreferencias.getInt("usertipe",2);
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
-
         spinnercat = root.findViewById(R.id.sppinercat);
         spinnerpro = root.findViewById(R.id.sppinerpro);
         cantidad = root.findViewById(R.id.cantxt);
@@ -410,8 +408,8 @@ public class HomeFragment extends Fragment {
                                 Log.e("TAG", document.getId() + " => " + document.getData());
 
 
-                                Double precio = Double.parseDouble(document.getData().get("precio").toString());
-                                Double precio2 = Double.parseDouble(document.getData().get("precio").toString());
+                                int precio = Integer.parseInt(document.getData().get("precio").toString());
+                                int precio2 = Integer.parseInt(document.getData().get("precio").toString());
                                 pre += precio;
 
 

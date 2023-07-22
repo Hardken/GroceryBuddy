@@ -116,7 +116,6 @@ public class MenuActivity extends AppCompatActivity {
                 //.setAction("Action", null).show();
 
                 //Navigation.findNavController(miactividad, R.id.nav_host_fragment).navigate(R.id.nav_producto);
-                    Navigation.findNavController(miactividad, R.id.nav_host_fragment_content_menu).navigate(R.id.nav_producto);
 
 
             }
