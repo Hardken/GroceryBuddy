@@ -166,7 +166,6 @@ public class ProductEdit extends Fragment {
                 String usuario = mispreferencias.getString("usuario", "NO HAY USUARIO");
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-
                 String newnombre = edt_producto_nombre.getText().toString();
                 String newcategoria = edt_producto_categoria.getText().toString();
                 int newprecio = Integer.parseInt(edt_producto_precio.getText().toString());

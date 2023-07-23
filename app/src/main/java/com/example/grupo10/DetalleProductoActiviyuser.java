@@ -31,6 +31,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,7 +45,8 @@ public class DetalleProductoActiviyuser extends AppCompatActivity implements Vie
     private Button btn_compra, btn_addcarrito, btnedit, btndelete;
     //private Button btn_map;
     //private GoogleMap mMap;
-    String nombre, usuario;
+    int year, month,day;
+    String nombre, usuario, actDate;
     String precio;
     String imagen;
     String categoria;
@@ -60,7 +62,6 @@ public class DetalleProductoActiviyuser extends AppCompatActivity implements Vie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalle_productouser_activiy);
-
         miActivity = this;
         SharedPreferences mispreferencias = miActivity.getSharedPreferences(Constant.PREFERENCE, Context.MODE_PRIVATE);
         usuario = mispreferencias.getString("usuario", "NO HAY USUARIO");
@@ -292,5 +293,13 @@ public class DetalleProductoActiviyuser extends AppCompatActivity implements Vie
                         });
                 break;
         }
+    }
+    public void fecha(){
+        Calendar calendar = Calendar.getInstance();
+        year = calendar.get(Calendar.YEAR);
+        month = calendar.get(Calendar.MONTH);
+        day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        actDate = day +"/"+(month+1)+"/"+year;
     }
 }

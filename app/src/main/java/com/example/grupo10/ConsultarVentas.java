@@ -83,7 +83,7 @@ public class ConsultarVentas extends Fragment {
                                 String nombre = document.getData().get("nombre").toString();
                                 String usuarios = document.getData().get("usuario").toString();
                                 String categoria = document.getData().get("categoria").toString();
-
+                                String fecha = document.getData().get("fecha").toString();
                                 Double precio = Double.parseDouble(document.getData().get("precio").toString());
                                 Double precio2 = Double.parseDouble(document.getData().get("precio").toString());
                                 pre += precio;
@@ -109,8 +109,11 @@ public class ConsultarVentas extends Fragment {
                                     producto.put("usuario", usuarios);
                                     producto.put("categoria", categoria);
                                     producto.put("precio", precio);
+                                    producto.put("fecha", fecha);
                                     //producto.put("entock", entock);
                                     producto.put("imagen", imagen);
+                                    producto.put("latitud", latitud);
+                                    producto.put("longitud", longitud);
                                     producto.put("precioto",precio2);
 
                                     productos.put(producto);
@@ -153,8 +156,8 @@ public class ConsultarVentas extends Fragment {
                                         String usuarios = document.getData().get("usuario").toString();
                                         String categoria = document.getData().get("categoria").toString();
 
-                                        int precio = Integer.parseInt(document.getData().get("precio").toString());
-                                        int precio2 = Integer.parseInt(document.getData().get("precio").toString());
+                                        Double precio = Double.parseDouble(document.getData().get("precio").toString());
+                                        Double precio2 = Double.parseDouble(document.getData().get("precio").toString());
                                         pre += precio;
                                         //boolean entock = Boolean.parseBoolean(document.getData().get("entock").toString());
                                         String imagen = document.getData().get("imagen").toString();
@@ -242,10 +245,12 @@ public class ConsultarVentas extends Fragment {
 
                 //boolean entock = productos.getJSONObject(position).getBoolean("entock");
                 String imagen = productos.getJSONObject(position).getString("imagen");
+                String fecha = productos.getJSONObject(position).getString("fecha");
                 Double latitud = productos.getJSONObject(position).getDouble("latitud");
                 Double longitud = productos.getJSONObject(position).getDouble("longitud");
                 //String codigo = productos.getJSONObject(position).getString("codigo");
-
+                //holder.tev_date.setText(fecha);
+                holder.tev_date.setText(fecha);
                 holder.tev_item_name.setText("Nombre: "+nombre);
                 holder.tev_usuario.setText("Usuario: "+usuario);
                 holder.tev_item_categoria.setText("Categoria: "+categoria);
@@ -304,6 +309,7 @@ public class ConsultarVentas extends Fragment {
         private final TextView tev_item_name;
         private final TextView tev_item_categoria;
         private final TextView tev_usuario;
+        private final TextView tev_date;
         private final TextView tev_item_precio;
         private final ImageView imv_item_producto;
         private Button btn_item_favorito;
@@ -312,6 +318,7 @@ public class ConsultarVentas extends Fragment {
         public ViewHolder(View v) {
             super(v);
             tev_item_name = v.findViewById(R.id.tev_item_name_pedidos);
+            tev_date = v.findViewById(R.id.tev_item_date_pedidos);
             tev_usuario = v.findViewById(R.id.tev_item_usuario_pedidos);
             tev_item_categoria = v.findViewById(R.id.tev_item_categoria_pedidos);
             tev_item_precio = v.findViewById(R.id.tev_item_precio_pedidos);

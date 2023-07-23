@@ -37,9 +37,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class HomeFragment_user extends Fragment {
@@ -48,7 +52,8 @@ public class HomeFragment_user extends Fragment {
     String nombre;
     Double val;
     int cant, usertipe, cuentapedi;
-    String nomcant;
+    int year, month,day;
+    String nomcant, actDate;
     String nompro;
     String cate;
     List<String> carnes;
@@ -73,6 +78,7 @@ public class HomeFragment_user extends Fragment {
         SharedPreferences mispreferencias = getActivity().getSharedPreferences(Constant.PREFERENCE, Context.MODE_PRIVATE);
         nombre = mispreferencias.getString("usuario", "NO HAY USUARIO");
         usertipe = mispreferencias.getInt("usertipe",2);
+
         spinnercat = root.findViewById(R.id.sppinercat);
         spinnerpro = root.findViewById(R.id.sppinerpro);
         cantidad = root.findViewById(R.id.cantxt);
@@ -434,6 +440,7 @@ public class HomeFragment_user extends Fragment {
                     }
                 });
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

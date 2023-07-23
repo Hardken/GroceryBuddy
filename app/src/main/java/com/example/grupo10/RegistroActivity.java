@@ -220,6 +220,8 @@ public class RegistroActivity extends AppCompatActivity {
         usuario.put("pregunta", idpreg);
         usuario.put("respuestaseguridad", respuesta);
         usuario.put("usertipe", 1);
+        usuario.put("cuenta", 0);
+        usuario.put("devtoken", "");
         usuario.put("imagen", "https://firebasestorage.googleapis.com/v0/b/grupo10-fae99.appspot.com/o/avatar200.jpg?alt=media&token=81d0d64e-40ae-4526-ba2b-90dfda01c9dc");
 
         db.collection("usuarios").document(correo)

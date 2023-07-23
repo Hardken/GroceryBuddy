@@ -1,6 +1,7 @@
 package com.example.grupo10.ui.home;
 
 import android.app.Activity;
+import android.app.Notification;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
@@ -29,26 +30,31 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.protobuf.StringValue;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class HomeFragment extends Fragment {
 
     String item;
     String nombre;
-    Double val;
-    int cant, usertipe, cuentapedi;
+    Double val, cuenta;
+    int cant, usertipe, pre;;
     String nomcant;
     String nompro;
     String cate;
@@ -73,8 +79,8 @@ public class HomeFragment extends Fragment {
         SharedPreferences mispreferencias = getActivity().getSharedPreferences(Constant.PREFERENCE, Context.MODE_PRIVATE);
         nombre = mispreferencias.getString("usuario", "NO HAY USUARIO");
         usertipe = mispreferencias.getInt("usertipe",2);
+        cuenta = Double.parseDouble(mispreferencias.getString("cuenta", "0.0"));
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-
         spinnercat = root.findViewById(R.id.sppinercat);
         spinnerpro = root.findViewById(R.id.sppinerpro);
         cantidad = root.findViewById(R.id.cantxt);
@@ -183,14 +189,15 @@ public class HomeFragment extends Fragment {
                 producto.put("precio", val);
                 producto.put("imagen", "https://www.clara.es/recetas/recetas-pechuga-pollo_16195");
                 producto.put("usuario", nombre);
+                producto.put("fecha", fecha());
                 producto.put("cantidad", 1);
-
                 db.collection("pedidos_"+nombre)
                         .add(producto)
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                             @Override
                             public void onSuccess(DocumentReference documentReference) {
                                 //Log.e("TAG", "DocumentSnapshot added with ID: " + documentReference.getId());
+                                actcuenta(nombre);
                                 Toast.makeText(getContext(), "Has comprado el producto", Toast.LENGTH_SHORT).show();
 
                             }
@@ -404,7 +411,7 @@ public class HomeFragment extends Fragment {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             JSONArray productos = new JSONArray();
-                            int pre=0;
+
                             for (QueryDocumentSnapshot document : task.getResult()) {
 
                                 Log.e("TAG", document.getId() + " => " + document.getData());
@@ -412,8 +419,8 @@ public class HomeFragment extends Fragment {
 
                                 Double precio = Double.parseDouble(document.getData().get("precio").toString());
                                 Double precio2 = Double.parseDouble(document.getData().get("precio").toString());
-                                pre += precio;
-
+                                cuenta += precio;
+                                actcuenta(nombre);
 
                                 JSONObject producto = new JSONObject();
                                 try {
@@ -428,13 +435,69 @@ public class HomeFragment extends Fragment {
 
                             }
 
-                            cuentatxt.setText("Cuenta total: $" + pre);
+                            cuentatxt.setText("Cuenta total: $" + cuenta);
 
                         } else {
                             Log.e("TAG", "Error getting documents: ", task.getException());
                         }
                     }
                 });
+    }
+    public void actcuenta(String nombre){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Map<String, Object> usuario = new HashMap<>();
+        //usuario.put("devtoken", "");
+        usuario.put("cuenta", cuenta);
+        db.collection("usuarios")
+                .whereEqualTo("correo", nombre)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful() && !task.getResult().isEmpty()){
+                            DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
+                            String documentID = documentSnapshot.getId();
+                            db.collection("usuarios")
+                                    .document(documentID)
+                                    .update(usuario)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+                                            Toast.makeText(getActivity(), "Actualizacion Correcta", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(getActivity(), "Actualizacion no Correcta", Toast.LENGTH_SHORT).show();
+
+                                        }
+                                    });
+                        }else{
+                            Toast.makeText(getActivity(), "Fallo", Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+                });
+    }
+    public void getToken(){
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            System.out.println("Fetching FCM registration token failed");
+                            return;
+                        }
+
+                        // Get new FCM registration token
+                        String token = task.getResult();
+                        // Log and toast
+                        System.out.println(token);
+                        Toast.makeText(getContext(), "tokes is: "+token, Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+    public String fecha(){
+        return new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date());
     }
     @Override
     public void onDestroyView() {

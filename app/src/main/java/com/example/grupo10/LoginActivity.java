@@ -174,7 +174,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Log.e("CONTRASENA", contrasena);
 
                 if (usuario.equals("admin@admin.com") && contrasena.equals("admin")) {
-                    toLogin(usuario, contrasena, "admin", "",0 );
+                    toLogin(usuario, contrasena, "admin", "",0 ,0.0);
 
                 }else if (usuario.isEmpty()){
                     edt_usuario.setError("Por favor introduce un correo electronico");
@@ -227,6 +227,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                         String userContrasena = document.getData().get("contrasena").toString();
                         int usertpie = Integer.parseInt(document.getData().get("usertipe").toString());
+                        Double cuenta = Double.parseDouble(document.getData().get("cuenta").toString());
                         String userNombre = document.getData().get("nombre").toString();
                         String userImagen= "";
                         try {
@@ -236,7 +237,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         }
 
                         if (contrasena.equals(userContrasena)) {
-                            toLogin(correo, contrasena, userNombre, userImagen, usertpie);
+                            toLogin(correo, contrasena, userNombre, userImagen, usertpie,cuenta);
                             player = MediaPlayer.create(LoginActivity.this,R.raw.impact);
                             player.start();
 
@@ -278,7 +279,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 });
     }
 
-    public void toLogin(String usuario, String contrasena, String nombre, String imagen, int usertipe){
+    public void toLogin(String usuario, String contrasena, String nombre, String imagen, int usertipe, double cuenta){
         Toast.makeText(this, "SE HA INICIADO SESIÓN", Toast.LENGTH_SHORT).show();
 
         SharedPreferences.Editor editor = mispreferencias.edit();
@@ -287,6 +288,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         editor.putString("nombre", nombre);
         editor.putString("imagen", imagen);
         editor.putInt("usertipe", usertipe);
+        editor.putString("cuenta", String.valueOf(cuenta));
         editor.apply();
 
         if (usertipe==1){
@@ -294,6 +296,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             intent.putExtra("usuario", usuario);
             intent.putExtra("usertipe", usertipe);
             intent.putExtra("contrasena", contrasena);
+            intent.putExtra("cuenta", String.valueOf(cuenta));
             startActivity(intent);
             finish();
         }else{
@@ -301,6 +304,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             intent.putExtra("usuario", usuario);
             intent.putExtra("usertipe", usertipe);
             intent.putExtra("contrasena", contrasena);
+            intent.putExtra("cuenta", String.valueOf(cuenta));
 
             startActivity(intent);
             finish();
@@ -320,7 +324,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 String usuario = data.getStringExtra("correo");
                 String contrasena = data.getStringExtra("contrasena");
 
-                toLogin(usuario, contrasena, "", "",0);
+                toLogin(usuario, contrasena, "", "",0,0.0);
             }
         }
 
