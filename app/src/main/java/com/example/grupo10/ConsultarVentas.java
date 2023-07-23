@@ -140,7 +140,7 @@ public class ConsultarVentas extends Fragment {
             public void onClick(View view) {
                 String user=editText1.getText().toString();
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
-                db.collection("pedidos"+user)
+                db.collection("pedidos_"+user)
                         .get()
                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
@@ -155,7 +155,7 @@ public class ConsultarVentas extends Fragment {
                                         String nombre = document.getData().get("nombre").toString();
                                         String usuarios = document.getData().get("usuario").toString();
                                         String categoria = document.getData().get("categoria").toString();
-
+                                        String fecha = document.getData().get("fecha").toString();
                                         Double precio = Double.parseDouble(document.getData().get("precio").toString());
                                         Double precio2 = Double.parseDouble(document.getData().get("precio").toString());
                                         pre += precio;
@@ -181,6 +181,7 @@ public class ConsultarVentas extends Fragment {
                                             producto.put("usuario", usuarios);
                                             producto.put("categoria", categoria);
                                             producto.put("precio", precio);
+                                            producto.put("fecha", fecha);
                                             //producto.put("entock", entock);
                                             producto.put("imagen", imagen);
                                             producto.put("latitud", latitud);
@@ -249,7 +250,6 @@ public class ConsultarVentas extends Fragment {
                 Double latitud = productos.getJSONObject(position).getDouble("latitud");
                 Double longitud = productos.getJSONObject(position).getDouble("longitud");
                 //String codigo = productos.getJSONObject(position).getString("codigo");
-                //holder.tev_date.setText(fecha);
                 holder.tev_date.setText(fecha);
                 holder.tev_item_name.setText("Nombre: "+nombre);
                 holder.tev_usuario.setText("Usuario: "+usuario);
