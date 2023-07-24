@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Grupo 10</string>
+    <string name="app_name">GroceryBuddy</string>
     <string name="txt_jugar">PLAY</string>
     <string name="txt_perfil">PROFILE</string>
     <string name="txt_ajustes">CONFIG</string>
