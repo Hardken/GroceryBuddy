@@ -201,6 +201,7 @@ public class ConsultarVentas extends Fragment {
                                     rev_fav.setAdapter(mAdapters);
 
                                     precio.setText("Venta total: $" + pre);
+                                    editText1.setText("");
 
                                 } else {
                                     Log.e("TAG", "Error getting documents: ", task.getException());

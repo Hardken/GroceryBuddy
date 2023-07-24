@@ -104,6 +104,7 @@ public class ConsultarUsers extends Fragment {
                                 String correo = document.getData().get("correo").toString();
                                 String contreña = document.getData().get("contrasena").toString();
                                 String imagen = document.getData().get("imagen").toString();
+                                String count = document.getData().get("cuenta").toString();
 
                                 JSONObject usuario = new JSONObject();
                                 try {
@@ -113,6 +114,7 @@ public class ConsultarUsers extends Fragment {
                                     usuario.put("correo", correo);
                                     usuario.put("contrasena", contreña);
                                     usuario.put("imagen", imagen);
+                                    usuario.put("cuenta", count);
                                     usuarios.put(usuario);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -167,10 +169,11 @@ public class ConsultarUsers extends Fragment {
                 String correo = usuarios.getJSONObject(position).getString("correo");
                 String imagen = usuarios.getJSONObject(position).getString("imagen");
                 String contraseña = usuarios.getJSONObject(position).getString("contrasena");
+                String count = usuarios.getJSONObject(position).getString("cuenta");
 
 
                 holder.tev_item_name.setText("Nombre: "+nombre);
-                holder.tev_usuario.setText("Apellido: "+apellido);
+                holder.tev_cuenta_usuario.setText("Cuenta: "+count);
                 holder.tev_item_categoria.setText("Correo: "+correo);
 
 
@@ -210,7 +213,7 @@ public class ConsultarUsers extends Fragment {
                         try {
                             //Log.e("PRODUCTOS", usuarios.getJSONObject(position).toString());
 
-                            Intent intent = new Intent(miActividad, PerfilActivity.class);
+                            Intent intent = new Intent(miActividad, PerfilActivityadmin.class);
 
                             intent.putExtra("usuario", usuarios.getJSONObject(position).toString());
 
@@ -226,7 +229,7 @@ public class ConsultarUsers extends Fragment {
                     @Override
                     public void onClick(View view) {
                         db.collection("usuarios")
-                                .whereEqualTo("nombre", nombre)
+                                .whereEqualTo("nombre", correo)
                                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                     @Override
                                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -278,7 +281,7 @@ public class ConsultarUsers extends Fragment {
 
         private final TextView tev_item_name;
         private final TextView tev_item_categoria;
-        private final TextView tev_usuario;
+        private final TextView tev_cuenta_usuario;
         private final ImageView imv_item_producto;
         private final Button btn_user_edit;
         private final Button btn_user_delete;
@@ -286,7 +289,7 @@ public class ConsultarUsers extends Fragment {
         public ViewHolder(View v) {
             super(v);
             tev_item_name = v.findViewById(R.id.tev_item_name_users);
-            tev_usuario = v.findViewById(R.id.tev_item_apellido_users);
+            tev_cuenta_usuario = v.findViewById(R.id.tev_item_cuenta_users);
             tev_item_categoria = v.findViewById(R.id.tev_item_Correo_users);
             imv_item_producto =  v.findViewById(R.id.imv_item_users);
             btn_user_edit =  v.findViewById(R.id.btn_user_edit);

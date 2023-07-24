@@ -10,15 +10,27 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_margin="20dp">
+        android:layout_margin="20dp"
+        android:layout_weight="100">
 
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rev_car"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_weight="80">
 
         </androidx.recyclerview.widget.RecyclerView>
+
+        <Button
+            android:layout_margin="20dp"
+            android:layout_weight="10"
+            android:id="@+id/comprarbtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Comprar">
+
+        </Button>
     </LinearLayout>
 
 

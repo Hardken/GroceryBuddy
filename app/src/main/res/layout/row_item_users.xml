@@ -45,10 +45,10 @@
                 android:textSize="15dp"/>
 
             <TextView
-                android:id="@+id/tev_item_apellido_users"
+                android:id="@+id/tev_item_cuenta_users"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Apellido"
+                android:text="Cuenta"
                 android:textColor="@color/black"
                 android:textSize="15dp"/>
 

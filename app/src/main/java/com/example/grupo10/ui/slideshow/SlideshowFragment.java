@@ -61,7 +61,7 @@ public class SlideshowFragment extends Fragment {
         SharedPreferences mispreferencias = getActivity().getSharedPreferences(Constant.PREFERENCE, Context.MODE_PRIVATE);
         String usuario = mispreferencias.getString("usuario", "NO HAY USUARIO");
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("favoritos"+usuario)
+        db.collection("favoritos_"+usuario)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override

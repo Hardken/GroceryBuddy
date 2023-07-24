@@ -2,9 +2,12 @@ package com.example.grupo10.ui.home;
 
 import android.app.Activity;
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -20,6 +23,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.grupo10.R;
@@ -54,7 +59,7 @@ public class HomeFragment extends Fragment {
     String item;
     String nombre;
     Double val, cuenta;
-    int cant, usertipe, pre;;
+    int cant, usertipe, pre;
     String nomcant;
     String nompro;
     String cate;
@@ -73,7 +78,7 @@ public class HomeFragment extends Fragment {
     MediaPlayer player, pl2;
     private Activity miActivity;
 
-
+    private static final String CHANNEL_ID = "compras";
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         SharedPreferences mispreferencias = getActivity().getSharedPreferences(Constant.PREFERENCE, Context.MODE_PRIVATE);
@@ -81,6 +86,7 @@ public class HomeFragment extends Fragment {
         usertipe = mispreferencias.getInt("usertipe",2);
         cuenta = Double.parseDouble(mispreferencias.getString("cuenta", "0.0"));
         View root = inflater.inflate(R.layout.fragment_home, container, false);
+        FirebaseMessaging.getInstance().subscribeToTopic("topic_nombre");
         spinnercat = root.findViewById(R.id.sppinercat);
         spinnerpro = root.findViewById(R.id.sppinerpro);
         cantidad = root.findViewById(R.id.cantxt);
@@ -89,7 +95,7 @@ public class HomeFragment extends Fragment {
         valor.setInputType(InputType.TYPE_CLASS_NUMBER);
         genbtn = root.findViewById(R.id.generarbtn);
         pedirbtn = root.findViewById(R.id.pedirbtn);
-        getcuenta(nombre);
+        cuentatxt.setText("Cuenta total: $" + cuenta);
         String[] categorias = new String[]{"Carnes", "Quesos", "Verduleria", "Frutas"};
         String[] frutas = new String[]{"Manzana", "Naranja", "Banano", "Uva", "Mango", "Papaya", "Piña", "Aguacate", "Mandarina", "Fresa"};
         carnes = new ArrayList<>();
@@ -197,7 +203,8 @@ public class HomeFragment extends Fragment {
                             @Override
                             public void onSuccess(DocumentReference documentReference) {
                                 //Log.e("TAG", "DocumentSnapshot added with ID: " + documentReference.getId());
-                                actcuenta(nombre);
+                                getcuenta(nombre);
+                                sendNotification(nombre,nompro);
                                 Toast.makeText(getContext(), "Has comprado el producto", Toast.LENGTH_SHORT).show();
 
                             }
@@ -419,9 +426,9 @@ public class HomeFragment extends Fragment {
 
                                 Double precio = Double.parseDouble(document.getData().get("precio").toString());
                                 Double precio2 = Double.parseDouble(document.getData().get("precio").toString());
-                                cuenta += precio;
+                                pre+=precio;
+                                cuenta=Double.parseDouble(String.valueOf(pre));
                                 actcuenta(nombre);
-
                                 JSONObject producto = new JSONObject();
                                 try {
                                     producto.put("precio", precio);
@@ -431,11 +438,9 @@ public class HomeFragment extends Fragment {
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
-
-
                             }
 
-                            cuentatxt.setText("Cuenta total: $" + cuenta);
+
 
                         } else {
                             Log.e("TAG", "Error getting documents: ", task.getException());
@@ -462,12 +467,12 @@ public class HomeFragment extends Fragment {
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void unused) {
-                                            Toast.makeText(getActivity(), "Actualizacion Correcta", Toast.LENGTH_SHORT).show();
+                                            //Toast.makeText(getActivity(), "Actualizacion Correcta", Toast.LENGTH_SHORT).show();
                                         }
                                     }).addOnFailureListener(new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(getActivity(), "Actualizacion no Correcta", Toast.LENGTH_SHORT).show();
+                                            //Toast.makeText(getActivity(), "Actualizacion no Correcta", Toast.LENGTH_SHORT).show();
 
                                         }
                                     });
@@ -498,6 +503,28 @@ public class HomeFragment extends Fragment {
     }
     public String fecha(){
         return new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date());
+    }
+
+    private void sendNotification(String nombre, String prod) {
+// Crea una notificación
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), CHANNEL_ID)
+                .setSmallIcon(R.mipmap.ic_launcher) // Icono pequeño para la notificación
+                .setContentTitle(nombre+" Compro un producto")
+                .setContentText(nombre+" Compro "+prod)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        // Envía la notificación
+        NotificationManager notificationManager = (NotificationManager) requireContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence channelName = "Nombre del canal";
+            String channelDescription = "Descripción del canal";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, channelName, importance);
+            channel.setDescription(channelDescription);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        notificationManager.notify(1, builder.build());
     }
     @Override
     public void onDestroyView() {

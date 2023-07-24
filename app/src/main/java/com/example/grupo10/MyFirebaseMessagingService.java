@@ -10,31 +10,41 @@ import com.google.firebase.messaging.RemoteMessage;
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        // TODO(developer): Handle FCM messages here.
-        // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
-        System.out.println("From: " + remoteMessage.getFrom());
-
-        // Check if message contains a data payload.
-
-
-        // Check if message contains a notification payload.
-        if (remoteMessage.getNotification() != null) {
-            System.out.println("Message Notification Body: " + remoteMessage.getNotification().getBody());
+        // Verifica si el mensaje contiene datos
+        if (remoteMessage.getData().size() > 0) {
+            // Aquí puedes manejar los datos del mensaje si es necesario
+            // Los datos del mensaje están disponibles en remoteMessage.getData()
         }
 
-        // Also if you intend on generating your own notifications as a result of a received FCM
-        // message, here is where that should be initiated. See sendNotification method below.
+        // Verifica si el mensaje contiene una notificación
+        if (remoteMessage.getNotification() != null) {
+            // Aquí puedes manejar la notificación recibida
+            // remoteMessage.getNotification().getTitle() te dará el título de la notificación
+            // remoteMessage.getNotification().getBody() te dará el cuerpo de la notificación
 
-        sendNotification(remoteMessage.getFrom(), remoteMessage.getNotification().getBody());
+            // En este ejemplo, mostraremos la notificación como un Toast en el hilo principal
+            String title = remoteMessage.getNotification().getTitle();
+            String body = remoteMessage.getNotification().getBody();
+
+            // Muestra la notificación en el hilo principal
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(MyFirebaseMessagingService.this.getApplicationContext(), title + " -> " + body, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
-    private void sendNotification(String from, String body) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(MyFirebaseMessagingService.this.getApplicationContext(), from + "->"+
-                 body, Toast.LENGTH_SHORT).show();
-            }
-        });
+    @Override
+    public void onNewToken(String token) {
+        // Aquí obtendrás el nuevo token de registro del dispositivo
+        // Puedes guardar este token en tu servidor o en la base de datos para enviar notificaciones a este dispositivo específico
+        // El token se actualiza automáticamente cuando cambia, por lo que solo necesitas guardar el último token recibido
+        // en tu servidor o base de datos.
+
+        // Aquí puedes implementar el código para enviar el token al servidor, si es necesario.
+        // Por ejemplo, podrías usar Retrofit o Volley para hacer una solicitud POST al servidor con el token.
+        // En el servidor, puedes guardar el token asociado al usuario para enviar notificaciones a usuarios específicos.
     }
 }

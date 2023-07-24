@@ -31,8 +31,11 @@ import com.google.firebase.firestore.QuerySnapshot;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class DetalleProductoActiviyuser extends AppCompatActivity implements View.OnClickListener{
@@ -72,7 +75,7 @@ public class DetalleProductoActiviyuser extends AppCompatActivity implements Vie
         btn_compra = findViewById(R.id.btn_compra);
         btn_addcarrito = findViewById(R.id.btn_addcarrito);
         //btnedit = findViewById(R.id.btn_edit);
-        btndelete = findViewById(R.id.btn_DELETE);
+        //btndelete = findViewById(R.id.btn_DELETE);
         //btn_map = findViewById(R.id.btn_map);
         tev_detalle_stock = findViewById(R.id.tev_detalle_stock);
         db = FirebaseFirestore.getInstance();
@@ -145,7 +148,7 @@ public class DetalleProductoActiviyuser extends AppCompatActivity implements Vie
             }
         });*/
 
-        btndelete.setOnClickListener(new View.OnClickListener() {
+        /*btndelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 db.collection("producto")
@@ -178,7 +181,8 @@ public class DetalleProductoActiviyuser extends AppCompatActivity implements Vie
                             }
                         });
             }
-        });
+        });*/
+
 /*        btn_map.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -188,6 +192,9 @@ public class DetalleProductoActiviyuser extends AppCompatActivity implements Vie
         });*/
 
 
+    }
+    public String fecha(){
+        return new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date());
     }
     /*@Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
@@ -229,6 +236,7 @@ public class DetalleProductoActiviyuser extends AppCompatActivity implements Vie
         producto.put("imagen", imagen);
         producto.put("entock", entock);
         producto.put("usuario", usuario);
+        producto.put("fecha", fecha());
         //producto.put("latitud", latitud);
         //producto.put("longitud", longitud);
         producto.put("cantidad", 1);
@@ -274,13 +282,13 @@ public class DetalleProductoActiviyuser extends AppCompatActivity implements Vie
                 break;
             case R.id.btn_addcarrito:
                 // Add a new document with a generated ID
-                db.collection("carrito"+usuario)
+                db.collection("carrito_"+usuario)
                         .add(producto)
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                             @Override
                             public void onSuccess(DocumentReference documentReference) {
                                 Log.e("TAG", "DocumentSnapshot added with ID: " + documentReference.getId());
-                                Toast.makeText(miActivity, "Has marcado como fab el producto", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(miActivity, "el producto fue guardado en el carrito", Toast.LENGTH_SHORT).show();
 
                             }
                         })
@@ -288,18 +296,10 @@ public class DetalleProductoActiviyuser extends AppCompatActivity implements Vie
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 Log.e("TAG", "Error adding document", e);
-                                Toast.makeText(miActivity, "Error al marcar como fab el producto", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(miActivity, "Error al guardadr en el carrito", Toast.LENGTH_SHORT).show();
                             }
                         });
                 break;
         }
-    }
-    public void fecha(){
-        Calendar calendar = Calendar.getInstance();
-        year = calendar.get(Calendar.YEAR);
-        month = calendar.get(Calendar.MONTH);
-        day = calendar.get(Calendar.DAY_OF_MONTH);
-
-        actDate = day +"/"+(month+1)+"/"+year;
     }
 }

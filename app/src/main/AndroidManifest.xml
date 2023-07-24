@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -36,9 +37,8 @@
             android:value="AIzaSyCCCRyoTNyXkNC-Mk_GumLu26bKfvBNt80" />
 
         <activity
-            android:name=".MapaActivity"
-            android:exported="false"
-            android:label="@string/title_activity_mapa" />
+            android:name=".PerfilActivityadmin"
+            android:exported="false" />
         <activity
             android:name=".DetalleProductoActiviy"
             android:exported="false" />
@@ -75,7 +75,7 @@
             android:name=".MainActivity"
             android:exported="true" />
         <service
-            android:name="MyFirebaseMessagingService"
+            android:name=".MyFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -45,7 +46,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class GalleryFragmentuser extends Fragment {
@@ -57,6 +61,7 @@ public class GalleryFragmentuser extends Fragment {
     private RecyclerView rev_productos;
     private RecyclerView.Adapter mAdapter;
     private String strtext;
+    EditText editText1;
     private final String productos = "[{\"nombre\":\"Guantes\",\"categoria\":\"Futbol\",\"precio\":40000,\"enstock\":true,\"imagen\":\"https://w7.pngwing.com/pngs/477/33/png-transparent-goalkeeper-guante-de-guardameta-glove-nike-football-goalkeeper-gloves-orange-adidas-goalkeeper.png\",\"sucursal\":[{\"nombre\":\"Sucursal A\",\"direccion\":\"Diección A\",\"encargado\":{\"nombre\":\"Encargado A\"}},{\"nombre\":\"Sucursal B\",\"direccion\":\"Diección B\",\"encargado\":{\"nombre\":\"Encargado B\"}}]},{\"nombre\":\"Guayos\",\"categoria\":\"Futbol\",\"precio\":120000,\"enstock\":false,\"imagen\":\"https://http2.mlstatic.com/D_NQ_NP_818984-MCO44044382745_112020-O.jpg\",\"sucursal\":[{\"nombre\":\"Sucursal C\",\"direccion\":\"Diección C\",\"encargado\":{\"nombre\":\"Encargado C\"}},{\"nombre\":\"Sucursal D\",\"direccion\":\"Diección D\",\"encargado\":{\"nombre\":\"Encargado D\"}}]},{\"nombre\":\"Balón\",\"categoria\":\"Futbol\",\"precio\":10000,\"enstock\":true,\"imagen\":\"https://http2.mlstatic.com/D_NQ_NP_675798-MCO43940869595_102020-V.jpg\",\"sucursal\":[{\"nombre\":\"Sucursal E\",\"direccion\":\"Diección E\",\"encargado\":{\"nombre\":\"Encargado E\"}},{\"nombre\":\"Sucursal F\",\"direccion\":\"Diección F\",\"encargado\":{\"nombre\":\"Encargado F\"}}]},{\"nombre\":\"Casco\",\"categoria\":\"Futbol\",\"precio\":650000,\"enstock\":true,\"imagen\":\"https://http2.mlstatic.com/D_NQ_NP_995259-MCO40463347072_012020-O.jpg\",\"sucursal\":[{\"nombre\":\"Sucursal E\",\"direccion\":\"Diección E\",\"encargado\":{\"nombre\":\"Encargado E\"}},{\"nombre\":\"Sucursal F\",\"direccion\":\"Diección F\",\"encargado\":{\"nombre\":\"Encargado F\"}}]},{\"nombre\":\"Medias\",\"categoria\":\"Futbol\",\"precio\":4000,\"enstock\":true,\"imagen\":\"https://http2.mlstatic.com/D_NQ_NP_628990-MLA46105649413_052021-W.jpg\",\"sucursal\":[{\"nombre\":\"Sucursal E\",\"direccion\":\"Diección E\",\"encargado\":{\"nombre\":\"Encargado E\"}},{\"nombre\":\"Sucursal F\",\"direccion\":\"Diección F\",\"encargado\":{\"nombre\":\"Encargado F\"}}]},{\"nombre\":\"Canilleras\",\"categoria\":\"Futbol\",\"precio\":6000,\"enstock\":true,\"imagen\":\"https://http2.mlstatic.com/D_NQ_NP_841158-MCO44011563751_112020-V.jpg\",\"sucursal\":[{\"nombre\":\"Sucursal E\",\"direccion\":\"Diección E\",\"encargado\":{\"nombre\":\"Encargado E\"}},{\"nombre\":\"Sucursal F\",\"direccion\":\"Diección F\",\"encargado\":{\"nombre\":\"Encargado F\"}}]}]";
     MediaPlayer player;
 
@@ -68,6 +73,8 @@ public class GalleryFragmentuser extends Fragment {
         spn_categorias = root.findViewById(R.id.spn_categorias);*/
         //btnvent = root.findViewById(R.id.btn_verventas);
         //btnagprod = root.findViewById(R.id.btn_addprod);
+        Button finpro = root.findViewById(R.id.btnfind);
+        editText1 = root.findViewById(R.id.findpro);
         String[] categorias = new String[]{"Beisbol", "Atletismo", "Karate", "Salto triple"};
 
         ArrayAdapter<String> adaptador = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item,
@@ -218,8 +225,67 @@ public class GalleryFragmentuser extends Fragment {
                     fr.commit();
                 }
             });*/
+        finpro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String produc=editText1.getText().toString();
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                db.collection("producto")
+                        .whereEqualTo("nombre",produc)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    JSONArray productos = new JSONArray();
+                                    int pre=0;
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                        Log.e("TAG", document.getId() + " => " + document.getData());
+
+                                        Log.e("TAG", document.getId() + " => " + document.getData());
+                                        String nombre = document.getData().get("nombre").toString();
+                                        String categoria = document.getData().get("categoria").toString();
+                                        double precio = Double.parseDouble(document.getData().get("precio").toString());
+                                        boolean entock = Boolean.parseBoolean(document.getData().get("entock").toString());
+                                        String imagen = document.getData().get("imagen").toString();
+                                        //boolean entock = Boolean.parseBoolean(document.getData().get("entock").toString());
+
+                                        //int cantidad = Integer.parseInt(document.getData().get("cantidad").toString());
+
+                                        JSONObject producto = new JSONObject();
+                                        try {
+                                            producto.put("nombre", nombre);
+                                            producto.put("categoria", categoria);
+                                            producto.put("precio", precio);
+                                            producto.put("entock", entock);
+                                            producto.put("imagen", imagen);
+
+                                            productos.put(producto);
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+
+
+                                    }
+                                    editText1.setText("");
+                                    mAdapter = new ProductosAdapteruser(productos, getActivity());
+
+                                    rev_productos.setAdapter(mAdapter);
+
+
+                                } else {
+
+
+                                    Log.e("TAG", "Error getting documents: ", task.getException());
+                                }
+                            }
+                        });
+            }
+        });
         return root;
     }
+
 
 }
 
@@ -242,6 +308,9 @@ class ProductosAdapteruser extends RecyclerView.Adapter<ProductosAdapteruser.Vie
         return viewHolder;
     }
 
+    public String fecha(){
+        return new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date());
+    }
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
@@ -324,7 +393,7 @@ class ProductosAdapteruser extends RecyclerView.Adapter<ProductosAdapteruser.Vie
                         producto.put("cantidad", 1);
 
                         // Add a new document with a generated ID
-                        db.collection("favoritos" + usuario)
+                        db.collection("favoritos_" + usuario)
                                 .add(producto)
                                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                     @Override
@@ -365,6 +434,7 @@ class ProductosAdapteruser extends RecyclerView.Adapter<ProductosAdapteruser.Vie
                     producto.put("categoria", categoria);
                     producto.put("precio", precio);
                     producto.put("entock", entock);
+                    producto.put("fecha", fecha());
                     //producto.put("codigo", codigo);
                     producto.put("imagen", imagen);
                     producto.put("usuario", usuario);
@@ -373,7 +443,7 @@ class ProductosAdapteruser extends RecyclerView.Adapter<ProductosAdapteruser.Vie
                     producto.put("cantidad", 1);
 
                     // Add a new document with a generated ID
-                    db.collection("carrito" + usuario)
+                    db.collection("carrito_" + usuario)
                             .add(producto)
                             .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                 @Override

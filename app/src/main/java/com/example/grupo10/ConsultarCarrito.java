@@ -29,6 +29,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -37,6 +39,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -54,6 +59,10 @@ public class ConsultarCarrito extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    Button comprarbtn;
+    String usuario;
+    Double cuenta;
+    int pre, usertipe;
     public ConsultarCarrito() {
         // Required empty public constructor
     }
@@ -95,11 +104,14 @@ public class ConsultarCarrito extends Fragment {
         View root = inflater.inflate(R.layout.fragment_consultar_carrito, container, false);
 
         rev_fav = root.findViewById(R.id.rev_car);
+        comprarbtn = root.findViewById(R.id.comprarbtn);
         rev_fav.setLayoutManager(new LinearLayoutManager(getActivity()));
         SharedPreferences mispreferencias = getActivity().getSharedPreferences(Constant.PREFERENCE, Context.MODE_PRIVATE);
-        String usuario = mispreferencias.getString("usuario", "NO HAY USUARIO");
+        usuario = mispreferencias.getString("usuario", "NO HAY USUARIO");
+        usertipe = mispreferencias.getInt("usertipe",2);
+        cuenta = Double.parseDouble(mispreferencias.getString("cuenta", "0.0"));
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("carrito"+usuario)
+        db.collection("carrito_"+usuario)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -110,9 +122,10 @@ public class ConsultarCarrito extends Fragment {
                             for (QueryDocumentSnapshot document : task.getResult()){
                                 String nombre = document.getData().get("nombre").toString();
                                 String categoria = document.getData().get("categoria").toString();
-                                int precio = Integer.parseInt(document.getData().get("precio").toString());
+                                Double precio = Double.parseDouble(document.getData().get("precio").toString());
                                 boolean entock = Boolean.parseBoolean(document.getData().get("entock").toString());
                                 String imagen = document.getData().get("imagen").toString();
+                                String fecha = document.getData().get("fecha").toString();
 
                                 Double latitud;
                                 Double longitud;
@@ -131,7 +144,7 @@ public class ConsultarCarrito extends Fragment {
                                     producto.put("precio", precio);
                                     producto.put("entock", entock);
                                     producto.put("imagen", imagen);
-                                    producto.put("latitud", latitud);
+                                    producto.put("fecha", fecha);
                                     producto.put("longitud", longitud);
 
                                     productos.put(producto);
@@ -147,7 +160,162 @@ public class ConsultarCarrito extends Fragment {
                         }
                     }
                 });
+        comprarbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                comprarcarrito();
+            }
+        });
         return root;
+    }
+
+
+    public void comprarcarrito(){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference productosRef = db.collection("carrito_"+usuario);
+        productosRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                    // Obtener los datos del documento actual
+                    Map<String, Object> producto = document.getData();
+
+                    // Agregar el documento a la otra colección "otra_coleccion"
+                    db.collection("pedidos_"+usuario).add(producto)
+                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                @Override
+                                public void onSuccess(DocumentReference documentReference) {
+                                    // Documento agregado exitosamente a "otra_coleccion"
+                                    getcuenta(usuario);
+                                    Toast.makeText(getContext(),"Documento agregado exitosamente a pedidos", Toast.LENGTH_SHORT).show();
+                                    emptycar();
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    // Error al agregar el documento a "otra_coleccion"
+                                }
+                            });
+                }
+                Toast.makeText(getContext(),"Proucto comprado exitosamente", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getContext(),"Error al obtener los documentos de la colección original",Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+    public void emptycar(){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference carRef = db.collection("carrito_"+usuario);
+        carRef.get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                            String documentId = document.getId();
+                            carRef.document(documentId).delete()
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            // Documento eliminado con éxito
+                                            // Puedes hacer cualquier otra acción aquí si es necesario
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            // Ocurrió un error al intentar eliminar el documento
+                                            // Maneja el error según tu lógica de la aplicación
+                                        }
+                                    });
+                        }
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+    }
+    public void getcuenta(String nombre){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("pedidos_"+nombre)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            JSONArray productos = new JSONArray();
+
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                Log.e("TAG", document.getId() + " => " + document.getData());
+
+
+                                Double precio = Double.parseDouble(document.getData().get("precio").toString());
+                                Double precio2 = Double.parseDouble(document.getData().get("precio").toString());
+                                pre+=precio;
+                                cuenta=Double.parseDouble(String.valueOf(pre));
+                                actcuenta(nombre);
+                                JSONObject producto = new JSONObject();
+                                try {
+                                    producto.put("precio", precio);
+                                    producto.put("precioto",precio2);
+
+                                    productos.put(producto);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+
+
+                        } else {
+                            Log.e("TAG", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+    public void actcuenta(String nombre){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Map<String, Object> usuario = new HashMap<>();
+        //usuario.put("devtoken", "");
+        usuario.put("cuenta", cuenta);
+        db.collection("usuarios")
+                .whereEqualTo("correo", nombre)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful() && !task.getResult().isEmpty()){
+                            DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
+                            String documentID = documentSnapshot.getId();
+                            db.collection("usuarios")
+                                    .document(documentID)
+                                    .update(usuario)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+                                            //Toast.makeText(getActivity(), "Actualizacion Correcta", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            //Toast.makeText(getActivity(), "Actualizacion no Correcta", Toast.LENGTH_SHORT).show();
+
+                                        }
+                                    });
+                        }else{
+                            Toast.makeText(getActivity(), "Fallo", Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+                });
     }
 
     class CarAdapter extends RecyclerView.Adapter<com.example.grupo10.ConsultarCarrito.ViewHolder> {
@@ -182,8 +350,7 @@ public class ConsultarCarrito extends Fragment {
                 int precio = productos.getJSONObject(position).getInt("precio");
                 boolean entock = productos.getJSONObject(position).getBoolean("entock");
                 String imagen = productos.getJSONObject(position).getString("imagen");
-                Double latitud = productos.getJSONObject(position).getDouble("latitud");
-                Double longitud = productos.getJSONObject(position).getDouble("longitud");
+                String fecha = productos.getJSONObject(position).getString("fecha");
                 //String codigo = productos.getJSONObject(position).getString("codigo");
 
                 holder.tev_item_name.setText(nombre);
@@ -231,7 +398,7 @@ public class ConsultarCarrito extends Fragment {
                 holder.btn_item_del_car.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        db.collection("carrito" + usuario)
+                        db.collection("carrito_" + usuario)
                                 .whereEqualTo("nombre", nombre)
                                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                     @Override
@@ -239,7 +406,7 @@ public class ConsultarCarrito extends Fragment {
                                         if (task.isSuccessful() && !task.getResult().isEmpty()){
                                             DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
                                             String documentID = documentSnapshot.getId();
-                                            db.collection("carrito" + usuario)
+                                            db.collection("carrito_" + usuario)
                                                     .document(documentID)
                                                     .delete()
                                                     .addOnSuccessListener(new OnSuccessListener<Void>() {

@@ -6,20 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".DetalleProductoActiviyuser"
     android:background="@color/white">
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
     <LinearLayout
         android:id="@+id/layoutdetalle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
-        android:layout_margin="20dp">
+        android:layout_margin="20dp"
+        android:layout_weight="100">
+
+
         <TextView
             android:id="@+id/tex_detalle_nombre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="25"
             android:text="Nombre"
             android:textStyle="bold"
             android:textSize="40dp"
@@ -32,53 +33,43 @@
             android:id="@+id/imv_detalle_imagen"
             android:layout_width="match_parent"
             android:layout_height="300dp"
+            android:layout_weight="25"
             android:src="@drawable/avatar">
-
         </ImageView>
-        <TextView
-            android:id="@+id/text_detalle_precio"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="24dp"
-            android:text="precio"
-            android:textStyle="bold"/>
-        <TextView
-            android:id="@+id/tev_detalle_categoria"
-            android:layout_width="match_parent"
-            android:text="categoría"
-            android:textSize="22dp"
-            android:layout_height="wrap_content">
+            android:orientation="vertical"
+            android:layout_weight="25"
+            android:layout_marginHorizontal="20dp">
+            <TextView
+                android:id="@+id/text_detalle_precio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="22dp"
+                android:text="precio"
+                android:layout_weight="8.33"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/tev_detalle_categoria"
+                android:layout_width="match_parent"
+                android:text="categoría"
+                android:textSize="22dp"
+                android:layout_weight="8.33"
+                android:layout_height="wrap_content">
 
-        </TextView>
-        <TextView
-            android:id="@+id/tev_detalle_stock"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="22dp"
-            android:text="Disponible">
-        </TextView>
-        <Button
-            android:layout_marginTop="10dp"
-            android:id="@+id/btn_compra"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/custom_button2"
-            android:text="@string/txt_buy"
-            android:textSize="20dp"
-            android:layout_marginBottom="10dp">
-        </Button>
+            </TextView>
+            <TextView
+                android:id="@+id/tev_detalle_stock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="22dp"
+                android:layout_weight="8.33"
+                android:text="Disponible">
+            </TextView>
+        </LinearLayout>
 
-        <Button
-            android:id="@+id/btn_addcarrito"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:backgroundTint="@null"
-            android:background="@drawable/custom_button1"
-            android:textColor="@color/black"
-            android:text="@string/txt_addtocar"
-            android:textSize="20dp"
-            android:layout_marginBottom="10dp">
-        </Button>
+
 <!--        <Button
             android:layout_marginTop="10dp"
             android:id="@+id/btn_map"
@@ -110,23 +101,42 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_weight="50">
-
+            android:orientation="vertical"
+            android:layout_weight="25"
+            android:layout_margin="20dp"
+            android:layout_gravity="center">
             <Button
-                android:layout_marginTop="10dp"
+                android:id="@+id/btn_compra"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="12.5"
+                android:background="@drawable/custom_button2"
+                android:text="@string/txt_buy"
+                android:textSize="20dp">
+            </Button>
+            <Button
+                android:id="@+id/btn_addcarrito"
+                android:layout_weight="12.5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:backgroundTint="@null"
+                android:background="@drawable/custom_button1"
+                android:textColor="@color/black"
+                android:text="@string/txt_addtocar"
+                android:layout_marginBottom="10dp"
+                android:textSize="20dp"
+                >
+            </Button>
+<!--            <Button
                 android:id="@+id/btn_DELETE"
-                android:layout_width="0dp"
+                android:layout_weight="8.33"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/custom_button2"
-                android:layout_weight="25"
                 android:text="borrar"
-                android:textSize="20dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="5dp">
-            </Button>
+                android:textSize="20dp">
+            </Button>-->
         </LinearLayout>
     </LinearLayout>
-</ScrollView>
-
 </LinearLayout>
