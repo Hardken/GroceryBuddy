@@ -18,7 +18,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:src="@drawable/avatar"
+            android:src="@drawable/store"
             android:layout_weight="60"/>
 
         <TextView
