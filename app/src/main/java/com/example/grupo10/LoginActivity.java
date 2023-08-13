@@ -132,11 +132,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         FirebaseAuth mAuth = FirebaseAuth.getInstance();
                         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
                         String mail = resetMail.getText().toString();
-                        Intent intent = new Intent(LoginActivity.this, recuperar_contra.class);
+                        /*Intent intent = new Intent(LoginActivity.this, recuperar_contra.class);
                         intent.putExtra("correo", mail);
                         startActivity(intent);
-                        finish();
-                        /*mAuth.sendPasswordResetEmail(mail).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        finish();*/
+                        mAuth.sendPasswordResetEmail(mail).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if(task.isSuccessful()){
@@ -145,7 +145,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     Toast.makeText(LoginActivity.this,"Error al reiniciar contraseña", Toast.LENGTH_SHORT).show();
                                 }
                             }
-                        });*/
+                        });
                     }
                 });
                 passwordReset.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -183,11 +183,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     edt_contrasena.setError("Por favor introduce una contraseña");
                     edt_contrasena.requestFocus();
                 }else {
-                    inicioSesionFirestore(usuario, contrasena);
+                    //inicioSesionFirestore(usuario, contrasena);
                     //inicioSesionFirebase(usuario, Utilidades.md5(contrasena));
                     //new GetUserLoginTask(this, usuario, Utilidades.md5(contrasena));
                     //Toast.makeText(this, "ERROR INICIANDO SESIÓN", Toast.LENGTH_SHORT).show();
-                    //iniciosesionconcotra(usuario, contrasena);
+                    iniciosesionconcotra(usuario, contrasena);
                 }
                 break;
             case R.id.btn_registro:
@@ -205,7 +205,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
                     Toast.makeText(LoginActivity.this, "iniciando sesion",Toast.LENGTH_SHORT).show();
-                    //toLogin(usuario, contrasena, "", "",);
+                    inicioSesionFirestore(usuario, contrasena);
+
                 }else {
                     Toast.makeText(LoginActivity.this, "DATOS INCORRECTOS",Toast.LENGTH_SHORT).show();
                 }
@@ -236,12 +237,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             userImagen = "";
                         }
 
-                        if (contrasena.equals(userContrasena)) {
+                        try {
+                            //inicioSesionFirebase(correo, contrasena);
                             toLogin(correo, contrasena, userNombre, userImagen, usertpie,cuenta);
                             player = MediaPlayer.create(LoginActivity.this,R.raw.impact);
                             player.start();
 
-                        } else {
+                        } catch (Exception e){
                             Toast.makeText(LoginActivity.this, "Contraseña incorrecta", Toast.LENGTH_SHORT).show();
                             player = MediaPlayer.create(LoginActivity.this,R.raw.sus);
                             player.start();
@@ -268,6 +270,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             // Sign in success, update UI with the signed-in user's information
                             Log.e("TAG", "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            Toast.makeText(LoginActivity.this, "inicio con aut", Toast.LENGTH_SHORT).show();
                             //toLogin(usuario, contrasena, "", "");
 
                         } else {

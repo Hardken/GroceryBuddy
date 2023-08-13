@@ -31,6 +31,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -132,7 +133,7 @@ public class RegistroActivity extends AppCompatActivity {
                     edt_pregunta.setError("Por favor introduce una respuesta a la pregunta de seguridad");
                     edt_pregunta.requestFocus();
                 }else if(contrasena.length() < 8 && !isValidPassword(contrasena)){
-                    Toast.makeText(RegistroActivity.this, "CONTRASEÑA NO VALIDA", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegistroActivity.this, "La contraseña debe tener minimo 8 caracteres", Toast.LENGTH_SHORT).show();
                 }else{
                     registrofirecloud(nombre,apellido,correo,contrasena,respuesta,idpreg);
                     Toast.makeText(RegistroActivity.this, "CONTRASEÑA VALIDA", Toast.LENGTH_SHORT).show();
@@ -223,23 +224,36 @@ public class RegistroActivity extends AppCompatActivity {
         usuario.put("cuenta", 0);
         usuario.put("devtoken", "");
         usuario.put("imagen", "https://firebasestorage.googleapis.com/v0/b/grupo10-fae99.appspot.com/o/avatar200.jpg?alt=media&token=81d0d64e-40ae-4526-ba2b-90dfda01c9dc");
-
-        db.collection("usuarios").document(correo)
-                .set(usuario)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
+        db.collection("usuarios").whereEqualTo("correo", correo)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
-                    public void onSuccess(Void aVoid) {
-                        registrarusuariofirebase(correo, contrasena);
-                        Log.d("TAG", "DocumentSnapshot successfully written!");
-                        Toast.makeText(RegistroActivity.this, "Usuario registrado",Toast.LENGTH_SHORT).show();
-                        finish();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("TAG", "Error writing document", e);
-                        Toast.makeText(RegistroActivity.this, "Usuario no registrado",Toast.LENGTH_SHORT).show();
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
+                            if (task.getResult().isEmpty()){
+                                db.collection("usuarios").document(correo)
+                                        .set(usuario)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                registrarusuariofirebase(correo, contrasena);
+                                                Log.d("TAG", "DocumentSnapshot successfully written!");
+                                                Toast.makeText(RegistroActivity.this, "Usuario registrado",Toast.LENGTH_SHORT).show();
+                                                finish();
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.w("TAG", "Error writing document", e);
+                                                Toast.makeText(RegistroActivity.this, "Usuario no registrado",Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                            }else{
+                                Toast.makeText(RegistroActivity.this, "Usuario con este correo ya existe", Toast.LENGTH_SHORT).show();
+                            }
+                        }else{
+                            Toast.makeText(RegistroActivity.this, "Error al comprobar el correo", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
 

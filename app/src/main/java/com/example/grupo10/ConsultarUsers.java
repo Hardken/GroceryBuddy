@@ -195,7 +195,7 @@ public class ConsultarUsers extends Fragment {
                         try {
                             //Log.e("PRODUCTOS", usuarios.getJSONObject(position).toString());
 
-                            Intent intent = new Intent(miActividad, PerfilActivity.class);
+                            Intent intent = new Intent(miActividad, PerfilActivityadmin.class);
 
                             intent.putExtra("usuario", usuarios.getJSONObject(position).toString());
 

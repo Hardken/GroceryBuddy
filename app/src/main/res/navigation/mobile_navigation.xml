@@ -10,7 +10,11 @@
         android:name="com.example.grupo10.ui.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
-
+    <fragment
+        android:id="@+id/nav_precio"
+        android:name="com.example.grupo10.util.price_admin"
+        android:label="Ajustar precios"
+        tools:layout="@layout/fragment_price_admin" />
     <fragment
         android:id="@+id/nav_gallery"
         android:name="com.example.grupo10.ui.gallery.GalleryFragmentuser"

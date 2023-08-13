@@ -57,8 +57,8 @@ import java.util.Map;
 public class HomeFragment extends Fragment {
 
     String item;
-    String nombre;
-    Double val, cuenta;
+    String nombre, pro;
+    Double val, cuenta, preco;
     int cant, usertipe, pre;
     String nomcant;
     String nompro;
@@ -178,13 +178,29 @@ public class HomeFragment extends Fragment {
         genbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                genfuntion();
+                //
+                // Ejemplo de uso desde una Activity
+                getprecio(new OnPrecioObtenidoListener() {
+                    @Override
+                    public void onPrecioObtenido(Double precio) {
+                        // Aquí puedes utilizar el valor de precio
+                        if (precio != null) {
+                            // El precio se ha obtenido correctamente
+                            //valor.setText(String.valueOf(precio));
+                            genfuntion(precio);
+                        } else {
+                            // No se encontró el precio o ocurrió un error
+                            valor.setText("Precio no disponible");
+                        }
+                    }
+                });
+
+
             }
         });
         pedirbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                genfuntion();
                 Toast.makeText(getContext(), "valor: "+ String.valueOf(val), Toast.LENGTH_SHORT).show();
                 //SharedPreferences mispreferencias = miActivity.getSharedPreferences(Constant.PREFERENCE, Context.MODE_PRIVATE);
                 //String usuario = mispreferencias.getString("usuario", "NO HAY USUARIO");
@@ -240,7 +256,7 @@ public class HomeFragment extends Fragment {
     }
 
 
-    public void interfuncion(int lib){
+    public void interfuncion(Double lib){
         nompro = String.valueOf(spinnerpro.getSelectedItem());
         Toast.makeText(getContext(),"cartegoria: "+cate+" "+"Producto :"+nompro,Toast.LENGTH_SHORT).show();
         if (valor.getText().toString().isEmpty()==false){
@@ -282,35 +298,35 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    public void genfuntion(){
+    public void genfuntion(double preo){
         cate = (String.valueOf(spinnercat.getSelectedItem()));
         int lib;
         switch (cate){
             case "Carnes":
                 switch (Integer.parseInt(String.valueOf(spinnerpro.getSelectedItemId()))){
                     case 0:
-                        lib = 14000;
-                        interfuncion(lib);
+                        //lib = Integer.parseInt(String.valueOf(preco));
+                        interfuncion(preco);
                         break;
                     case 1:
                         lib = 16000;
-                        interfuncion(lib);
+                        interfuncion(preco);
                         break;
                     case 2:
                         lib = 16000;
-                        interfuncion(lib);
+                        interfuncion(preco);
                         break;
                     case 3:
                         lib = 16000;
-                        interfuncion(lib);
+                        interfuncion(preco);
                         break;
                     case 4:
                         lib = 16000;
-                        interfuncion(lib);
+                        interfuncion(preco);
                         break;
                     case 5:
                         lib = 16000;
-                        interfuncion(lib);
+                        interfuncion(preco);
                         break;
                     default:
                         break;
@@ -320,27 +336,27 @@ public class HomeFragment extends Fragment {
                 switch (Integer.parseInt(String.valueOf(spinnerpro.getSelectedItemId()))){
                     case 0:
                         lib = 14000;
-                        interfuncion(lib);
+                        //interfuncion(lib);
                         break;
                     case 1:
                         lib = 16000;
-                        interfuncion(lib);
+                        //interfuncion(lib);
                         break;
                     case 2:
                         lib = 16000;
-                        interfuncion(lib);
+                        //interfuncion(lib);
                         break;
                     case 3:
                         lib = 16000;
-                        interfuncion(lib);
+                        //interfuncion(lib);
                         break;
                     case 4:
                         lib = 16000;
-                        interfuncion(lib);
+                        //interfuncion(lib);
                         break;
                     case 5:
                         lib = 16000;
-                        interfuncion(lib);
+                        //interfuncion(lib);
                         break;
                     default:
                         break;
@@ -350,27 +366,27 @@ public class HomeFragment extends Fragment {
                 switch (Integer.parseInt(String.valueOf(spinnerpro.getSelectedItemId()))){
                     case 0:
                         lib = 14000;
-                        interfuncion(lib);
+                        //interfuncion(lib);
                         break;
                     case 1:
                         lib = 16000;
-                        interfuncion(lib);
+                        //interfuncion(lib);
                         break;
                     case 2:
                         lib = 16000;
-                        interfuncion(lib);
+                        //interfuncion(lib);
                         break;
                     case 3:
                         lib = 16000;
-                        interfuncion(lib);
+                        //interfuncion(lib);
                         break;
                     case 4:
                         lib = 16000;
-                        interfuncion(lib);
+                        //interfuncion(lib);
                         break;
                     case 5:
                         lib = 16000;
-                        interfuncion(lib);
+                        //interfuncion(lib);
                         break;
                     default:
                         break;
@@ -379,28 +395,28 @@ public class HomeFragment extends Fragment {
             case "Frutas":
                 switch (Integer.parseInt(String.valueOf(spinnerpro.getSelectedItemId()))){
                     case 0:
-                        lib = 14000;
-                        interfuncion(lib);
+                        lib = 13000;
+                        //interfuncion(lib);
                         break;
                     case 1:
                         lib = 16000;
-                        interfuncion(lib);
+                        //interfuncion(lib);
                         break;
                     case 2:
                         lib = 16000;
-                        interfuncion(lib);
+                        //interfuncion(lib);
                         break;
                     case 3:
                         lib = 16000;
-                        interfuncion(lib);
+                        //interfuncion(lib);
                         break;
                     case 4:
                         lib = 16000;
-                        interfuncion(lib);
+                        //interfuncion(lib);
                         break;
                     case 5:
                         lib = 16000;
-                        interfuncion(lib);
+                        //interfuncion(lib);
                         break;
                     default:
                         break;
@@ -448,6 +464,33 @@ public class HomeFragment extends Fragment {
                     }
                 });
     }
+
+    public interface OnPrecioObtenidoListener {
+        void onPrecioObtenido(Double precio);
+    }
+    public void getprecio(OnPrecioObtenidoListener listener) {
+        pro = spinnerpro.getSelectedItem().toString();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("precios")
+                .whereEqualTo("nombre", pro)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        preco = null;
+                        if (task.isSuccessful() && !task.getResult().isEmpty()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                preco = Double.parseDouble(document.getData().get("precio").toString());
+                                break; // Si solo esperas un resultado, puedes salir del loop aquí
+                            }
+                        } else {
+                            Log.e("TAG", "Error getting documents: ", task.getException());
+                        }
+                        // Llamamos al método onPrecioObtenido de la interfaz para devolver el precio
+                        listener.onPrecioObtenido(preco);
+                    }
+                });
+    }
+
     public void actcuenta(String nombre){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         Map<String, Object> usuario = new HashMap<>();

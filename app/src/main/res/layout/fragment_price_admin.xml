@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".util.price_admin"
+    android:orientation="vertical">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="10"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/pricetextadmin"
+            android:layout_margin="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:hint="Atualiza los precios"
+            android:gravity="center"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:orientation="vertical"
+        android:layout_weight="90">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Spinner
+                android:layout_margin="10dp"
+                android:id="@+id/pricesppinercat"
+                android:layout_width="0dp"
+                android:layout_weight="25"
+                android:layout_height="wrap_content">
+            </Spinner>
+            <Spinner
+                android:layout_margin="10dp"
+                android:id="@+id/pricesppinerpro"
+                android:layout_width="0dp"
+                android:layout_weight="25"
+                android:layout_height="wrap_content">
+            </Spinner>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <EditText
+                android:layout_margin="10dp"
+                android:id="@+id/pricetxtvalor"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="25"
+                android:inputType="number"
+                android:hint="valor"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/pricegenerarbtn"
+                android:layout_margin="10dp"
+                android:layout_width="wrap_content"
+                android:layout_weight="12.5"
+                android:layout_height="wrap_content"
+                android:text="Obtener Precio"/>
+            <Button
+                android:id="@+id/pricepedirbtn"
+                android:layout_margin="10dp"
+                android:layout_width="wrap_content"
+                android:layout_weight="12.5"
+                android:layout_height="wrap_content"
+                android:text="Actualizar precio"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
