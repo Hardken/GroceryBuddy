@@ -57,7 +57,7 @@ import java.util.Map;
 public class HomeFragment extends Fragment {
 
     String item;
-    String nombre, pro;
+    String nombre, pro, img;
     Double val, cuenta, preco;
     int cant, usertipe, pre;
     String nomcant;
@@ -97,35 +97,39 @@ public class HomeFragment extends Fragment {
         pedirbtn = root.findViewById(R.id.pedirbtn);
         cuentatxt.setText("Cuenta total: $" + cuenta);
         String[] categorias = new String[]{"Carnes", "Quesos", "Verduleria", "Frutas"};
-        String[] frutas = new String[]{"Manzana", "Naranja", "Banano", "Uva", "Mango", "Papaya", "Piña", "Aguacate", "Mandarina", "Fresa"};
+        String[] frutas = new String[]{"Manzana", "Papaya", "Banano", "Guayaba ", "Maracuya", "Tomate de árbol", "Lulo", "Limón "};
         carnes = new ArrayList<>();
-        carnes.add("Pechuga de pollo");
         carnes.add("Muslos de pollo");
-        carnes.add("Solomito de res");
-        carnes.add("Pechuga de cerdo");
+        carnes.add("Pechugas de pollo");
+        carnes.add("Alas de pollo");
         carnes.add("Lomo de cerdo");
-        carnes.add("Sobrebarriga");
+        carnes.add("Tocino");
+        carnes.add("Panceta");
+        carnes.add("Pezuñas");
+        carnes.add("Pierna de res ");
+        carnes.add("Brazo de res");
+        carnes.add("Hueso de res");
+        carnes.add("Carne molida");
         Lacteos = new ArrayList<>();
-        Lacteos.add("Queso tajado");
-        Lacteos.add("Queso costeño");
+        Lacteos.add("Queso doble crema tajado");
+        Lacteos.add("Queso crema en bloque");
         Lacteos.add("Queso campesino");
-        Lacteos.add("Queso parmesano");
         Verduleria = new ArrayList<>();
         Verduleria.add("Tomate");
-        Verduleria.add("Cebolla");
-        Verduleria.add("Papa");
-        Verduleria.add("Yuca");
-        Verduleria.add("Zanahoria");
         Verduleria.add("Cebolla larga");
-        Verduleria.add("Ajo");
+        Verduleria.add("Cebolla cabezona");
+        Verduleria.add("Zanahoria");
+        Verduleria.add("Pimentón");
         Verduleria.add("Pepino");
-        Verduleria.add("Mazorca");
-        Verduleria.add("Brocoli");
-        Verduleria.add("Coliflor");
+        Verduleria.add("Plátano");
+        Verduleria.add("Aguacate");
+        Verduleria.add("Papa");
         Verduleria.add("Lechuga");
-        Verduleria.add("Pimiento");
-        Verduleria.add("Remolacha");
-        Verduleria.add("Champiñon");
+        Verduleria.add("Mazorca");
+        Verduleria.add("Apio");
+        Verduleria.add("Papa criolla");
+        Verduleria.add("Libra de ajo");
+        Verduleria.add("Yuca");
         cantidades = new ArrayList<String>();
         cantidades.add("1/2 libra");
         cantidades.add("1 libra");
@@ -150,12 +154,12 @@ public class HomeFragment extends Fragment {
 
                         break;
                     case "Quesos":
-                        spinnerpro.setAdapter(new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, Lacteos));                        cantidad.setAdapter(new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, cantidades));
+                        spinnerpro.setAdapter(new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, Lacteos));
                         cantidad.setAdapter(new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, cantidades));
 
                         break;
                     case "Verduleria":
-                        spinnerpro.setAdapter(new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, Verduleria));                        cantidad.setAdapter(new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, cantidades));
+                        spinnerpro.setAdapter(new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, Verduleria));
                         cantidad.setAdapter(new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, cantidades));
 
                         break;
@@ -209,7 +213,7 @@ public class HomeFragment extends Fragment {
                 producto.put("nombre", nomcant+" "+nompro);
                 producto.put("categoria", cate);
                 producto.put("precio", val);
-                producto.put("imagen", "https://www.clara.es/recetas/recetas-pechuga-pollo_16195");
+                producto.put("imagen", img);
                 producto.put("usuario", nombre);
                 producto.put("fecha", fecha());
                 producto.put("cantidad", 1);
@@ -246,7 +250,7 @@ public class HomeFragment extends Fragment {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 Log.e("TAG", "Error adding document", e);
-                                Toast.makeText(getContext(), "Error comprando el producto", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "Error pidiendo el producto", Toast.LENGTH_SHORT).show();
                             }
                         });
             }
@@ -269,6 +273,7 @@ public class HomeFragment extends Fragment {
                 case 0:
                     val = Double.parseDouble(String.valueOf((lib*1)/2));
                     valor.setText(val.toString());
+                    img = "https://firebasestorage.googleapis.com/v0/b/grupo10-fae99.appspot.com/o/admin%40admin.com%2FCarnes%2Frecetas-con-pechuga-de-pollo_a62c2947_1280x853.jpg?alt=media&token=0587986f-718d-43a8-b941-2b165aa9c349";
                     break;
                 case 1:
                     val = Double.parseDouble(String.valueOf((lib*1)/1));
